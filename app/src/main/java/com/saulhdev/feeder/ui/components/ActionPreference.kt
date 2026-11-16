@@ -21,10 +21,12 @@ import androidx.annotation.StringRes
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.saulhdev.feeder.data.content.StringPref
+import com.saulhdev.feeder.data.content.asState
 import com.saulhdev.feeder.ui.navigation.LocalNavController
 import com.saulhdev.feeder.ui.navigation.NavRoute
 
@@ -37,10 +39,12 @@ fun ActionPreference(
     isEnabled: Boolean = true,
 ) {
     val navController = LocalNavController.current
+    val value by pref.asState()
     BasePreference(
         modifier = modifier,
         titleId = pref.titleId,
         summaryId = pref.summaryId,
+        summary = value.takeIf { pref.showValue && it.isNotBlank() },
         index = index,
         groupSize = groupSize,
         isEnabled = isEnabled,

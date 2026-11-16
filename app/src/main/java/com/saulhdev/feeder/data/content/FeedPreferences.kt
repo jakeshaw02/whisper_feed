@@ -306,7 +306,8 @@ class FeedPreferences private constructor(val context: Context) : KoinComponent 
         key = GLANCE_PLACE_NAME,
         dataStore = dataStore,
         defaultValue = "",
-        route = NavRoute.GlanceLocation
+        route = NavRoute.GlanceLocation,
+        showValue = true,
     )
 
     /**
@@ -323,8 +324,8 @@ class FeedPreferences private constructor(val context: Context) : KoinComponent 
         entries = getTempUnits(context),
         buttons = mapOf(
             TEMP_UNIT_AUTO to R.string.temp_unit_auto,
-            TEMP_UNIT_CELSIUS to R.string.temp_unit_celsius,
-            TEMP_UNIT_FAHRENHEIT to R.string.temp_unit_fahrenheit,
+            TEMP_UNIT_CELSIUS to R.string.temp_unit_celsius_short,
+            TEMP_UNIT_FAHRENHEIT to R.string.temp_unit_fahrenheit_short,
         ),
     )
 

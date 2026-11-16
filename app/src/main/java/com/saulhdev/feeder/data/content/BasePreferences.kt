@@ -45,6 +45,8 @@ class StringPref(
     val defaultValue: String = "",
     val onClick: (() -> Unit)? = null,
     val route: NavRoute? = null,
+    /** Show the stored value under the title (e.g. the chosen place). Blank shows nothing. */
+    val showValue: Boolean = false,
 ) : PrefDelegate<String>(titleId, summaryId, dataStore, key, defaultValue)
 
 class StringSelectionPref(

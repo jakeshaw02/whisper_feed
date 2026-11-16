@@ -234,6 +234,8 @@
     <string name="temp_unit_auto">Automatic</string>
     <string name="temp_unit_celsius">Celsius (°C)</string>
     <string name="temp_unit_fahrenheit">Fahrenheit (°F)</string>
+    <string name="temp_unit_celsius_short" translatable="false">°C</string>
+    <string name="temp_unit_fahrenheit_short" translatable="false">°F</string>
     <string name="pref_glance_place_hint">Search for a town or city</string>
     <string name="pref_glance_place_none">Not set</string>
     <string name="glance_sunset">Sunset</string>
