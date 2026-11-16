@@ -113,6 +113,7 @@ fun settingsRows(prefs: FeedPreferences, section: SettingsSection, debugging: Bo
             prefs.blockedWords,
             prefs.glanceEnabled,
             prefs.glancePlaceName,
+            prefs.glanceTempUnit,
             prefs.learned,
             prefs.statistics,
         )

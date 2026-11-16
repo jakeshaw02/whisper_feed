@@ -123,6 +123,14 @@ const val READER_TEXT_DEFAULT = "default"
 const val READER_TEXT_LARGE = "large"
 const val READER_TEXT_LARGER = "larger"
 
+fun getTempUnits(context: Context): Map<String, String> {
+    return mapOf(
+        TEMP_UNIT_AUTO to context.resources.getString(R.string.temp_unit_auto),
+        TEMP_UNIT_CELSIUS to context.resources.getString(R.string.temp_unit_celsius),
+        TEMP_UNIT_FAHRENHEIT to context.resources.getString(R.string.temp_unit_fahrenheit),
+    )
+}
+
 fun getReaderTextSizes(context: Context): Map<String, String> {
     return mapOf(
         READER_TEXT_SMALL to context.resources.getString(R.string.reader_text_small),

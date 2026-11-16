@@ -38,7 +38,9 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.TextStyle
@@ -52,10 +54,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.saulhdev.feeder.R
+import com.saulhdev.feeder.data.content.FeedPreferences
+import com.saulhdev.feeder.data.content.asState
+import com.saulhdev.feeder.utils.formatTemperature
+import com.saulhdev.feeder.utils.resolveTempUnit
+import org.koin.compose.koinInject
 import com.saulhdev.feeder.manager.glance.GlanceState
 import com.saulhdev.feeder.manager.glance.weatherLook
 import java.time.format.DateTimeFormatter
-import kotlin.math.roundToInt
 
 /**
  * The least a chip is: three lines at the normal text size, with room over.
@@ -166,7 +172,15 @@ fun GlanceRow(
             }
         }
 
-        val temperature = weather?.let { "${it.temperatureC.roundToInt()}°" }
+        // Region from the configuration, not Locale.getDefault(), so Compose
+        // sees a language/region change (as in ArticlePage). The unit is part
+        // of the temperature string, which is already a key of the rain
+        // layout's remember below, so that recalculates when it changes.
+        val prefs: FeedPreferences = koinInject()
+        val unitPref by prefs.glanceTempUnit.asState()
+        val country = LocalConfiguration.current.locales[0].country
+        val unit = resolveTempUnit(unitPref, country)
+        val temperature = weather?.let { formatTemperature(it.temperatureC, unit) }
         // Only when it is worth knowing. A chip that reads "3%" every dry
         // day is noise, and the number is only ever useful as the answer
         // to "do I need a coat".

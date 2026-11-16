@@ -104,6 +104,10 @@ import com.saulhdev.feeder.utils.LEGACY_THEME_SYSTEM_BLACK
 import com.saulhdev.feeder.utils.THEME_DARK
 import com.saulhdev.feeder.utils.THEME_FOLLOW_SYSTEM
 import com.saulhdev.feeder.utils.getFonts
+import com.saulhdev.feeder.utils.getTempUnits
+import com.saulhdev.feeder.utils.TEMP_UNIT_AUTO
+import com.saulhdev.feeder.utils.TEMP_UNIT_CELSIUS
+import com.saulhdev.feeder.utils.TEMP_UNIT_FAHRENHEIT
 import com.saulhdev.feeder.utils.getThemes
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -303,6 +307,25 @@ class FeedPreferences private constructor(val context: Context) : KoinComponent 
         dataStore = dataStore,
         defaultValue = "",
         route = NavRoute.GlanceLocation
+    )
+
+    /**
+     * °C or °F on the weather chip. Automatic follows the phone's region.
+     * Applied when the chip is drawn, not in the request, so a cached reading
+     * stays valid when this changes.
+     */
+    var glanceTempUnit = StringSelectionPref(
+        titleId = R.string.pref_glance_temp_unit,
+        icon = Phosphor.CloudSun,
+        key = GLANCE_TEMP_UNIT,
+        dataStore = dataStore,
+        defaultValue = TEMP_UNIT_AUTO,
+        entries = getTempUnits(context),
+        buttons = mapOf(
+            TEMP_UNIT_AUTO to R.string.temp_unit_auto,
+            TEMP_UNIT_CELSIUS to R.string.temp_unit_celsius,
+            TEMP_UNIT_FAHRENHEIT to R.string.temp_unit_fahrenheit,
+        ),
     )
 
     /** "lat,lon" for the chosen place. Stored as text to avoid a float pref pair. */
@@ -1303,6 +1326,7 @@ class FeedPreferences private constructor(val context: Context) : KoinComponent 
         val GLANCE_ENABLED = booleanKey("pref_glance_enabled")
         val GLANCE_PLACE_NAME = stringKey("pref_glance_place_name")
         val GLANCE_PLACE_COORDS = stringKey("pref_glance_place_coords")
+        val GLANCE_TEMP_UNIT = stringKey("pref_glance_temp_unit")
         val OVERLAY_OPACITY = floatKey("pref_overlay_opacity")
         val ARTICLE_OPEN_MODE = stringKey("pref_article_open_mode")
         val FEED_LAYOUT = stringKey("pref_feed_layout")
